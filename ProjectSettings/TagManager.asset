@@ -53,3 +53,6 @@ TagManager:
   - name: Piso
     uniqueID: 240479805
     locked: 0
+  - name: Player
+    uniqueID: 2577678841
+    locked: 0
