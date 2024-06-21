@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 283592653}
   - component: {fileID: 283592652}
   - component: {fileID: 283592656}
+  - component: {fileID: 283592657}
   m_Layer: 0
   m_Name: JugadorPrueba
   m_TagString: Untagged
@@ -296,11 +297,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadDeMovimiento: 350
-  suavizadoDeMovimiento: 0.143
+  suavizadoDeMovimiento: 0.14
   velocidadMovimientoBase: 350
   velocidadExtra: 700
   tiempoSprint: 1
   tiempoEntreSprints: 4
+--- !u!114 &283592657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283592651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acf1bcf68f4e4d4ea6e29d3d54e5735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
