@@ -12,19 +12,64 @@ public class ControladorJugador : MonoBehaviour
     [SerializeField] private float velocidadDeMovimiento;
     [Range(0,0.3f)][SerializeField] private float suavizadoDeMovimiento;
     private Vector3 velocidad = Vector3.zero;
-
     private bool mirandoDerecha = true;
+
+    [Header("Sprint")]
+    [SerializeField] private float velocidadMovimientoBase;
+    [SerializeField] private float velocidadExtra;
+    [SerializeField] private float tiempoSprint;
+    private float tiempoActualSprint;
+    private float tiempoSiguienteSprint;
+    [SerializeField] private float tiempoEntreSprints;
+    private bool puedeCorrer = true;
+    private bool estaCorriendo = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        tiempoActualSprint = tiempoSprint;
     }
 
     // Update is called once per frame
     void Update()
     {
         movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimiento;
+
+        if (Input.GetKeyDown(KeyCode.C) && puedeCorrer) 
+        {
+            velocidadDeMovimiento = velocidadExtra;
+            estaCorriendo = true;
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            velocidadDeMovimiento = velocidadMovimientoBase;
+            estaCorriendo = false;
+        }
+
+        if (Mathf.Abs(rb2D.velocity.x) >= 0 && estaCorriendo) 
+        {
+            if (tiempoActualSprint > 0 )
+            {
+                tiempoActualSprint -= Time.deltaTime;
+            }
+            else
+            {
+                velocidadDeMovimiento = velocidadMovimientoBase;
+                estaCorriendo = false;
+                puedeCorrer = false;
+                tiempoSiguienteSprint = Time.time + tiempoEntreSprints;
+            }
+        }
+
+        if (!estaCorriendo && tiempoActualSprint <= tiempoSprint && Time.time >= tiempoSiguienteSprint)
+        {
+            tiempoActualSprint += Time.deltaTime;
+            if (tiempoActualSprint >= tiempoSprint)
+            {
+                puedeCorrer = true;
+            }
+        }
     }
 
     private void FixedUpdate()
