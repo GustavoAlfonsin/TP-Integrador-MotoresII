@@ -45,12 +45,20 @@ public class ControladorJugador : MonoBehaviour
             Girar();
         }
     }
-
     private void Girar()
     {
         mirandoDerecha = !mirandoDerecha;
         Vector3 escala = transform.localScale;
         escala.x *= -1;
         transform.localScale = escala;
+    }
+
+    public void tomarDanio(float danio)
+    {
+        vida -= danio;
+        if (vida <= 0) 
+        {
+            vida = 0;
+        }
     }
 }
