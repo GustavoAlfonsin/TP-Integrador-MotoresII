@@ -9,6 +9,9 @@ public class ControladorArmasJugador : MonoBehaviour
     private int indexArma;
     public Arma armaActual;
 
+    [SerializeField] private Transform controladorDisparo;
+    [SerializeField] private float rango;
+
     private void Awake()
     {
         ArmasJugador = new List<Arma>();
@@ -29,6 +32,10 @@ public class ControladorArmasJugador : MonoBehaviour
     void Update()
     {
         CambiarArma();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Disparar();
+        }
     }
 
     private void CambiarArma()
@@ -59,6 +66,19 @@ public class ControladorArmasJugador : MonoBehaviour
             }
             armaActual = ArmasJugador[indexArma];
             Debug.Log($"Estas usando {armaActual.Tipo}");
+        }
+    }
+
+    private void Disparar()
+    {
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(controladorDisparo.position, controladorDisparo.right, rango);
+
+        if (raycastHit2D)
+        {
+            if (raycastHit2D.transform.CompareTag("Enemigo"))
+            {
+                Debug.Log("Impacto con el enemigo");
+            }
         }
     }
 }

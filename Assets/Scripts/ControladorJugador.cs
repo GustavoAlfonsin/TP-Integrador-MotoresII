@@ -93,9 +93,7 @@ public class ControladorJugador : MonoBehaviour
     private void Girar()
     {
         mirandoDerecha = !mirandoDerecha;
-        Vector3 escala = transform.localScale;
-        escala.x *= -1;
-        transform.localScale = escala;
+        transform.eulerAngles = new Vector3(0,transform.eulerAngles.y + 180, 0);
     }
 
     public void tomarDanio(float danio)
