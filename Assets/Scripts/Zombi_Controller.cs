@@ -12,14 +12,14 @@ public class Zombi_Controller : MonoBehaviour
     public float distanciaLinea;
     public LayerMask capaJugador;
     public RaycastHit2D jugadorEnRango;
-    private bool enContactoJugador;
+    internal bool enContactoJugador;
 
     [Header("Movimiento")]
-    [SerializeField] private float velocidadMovimiento;
-    [SerializeField] private Transform[] puntosMoviento;
-    [SerializeField] private float distanciaMinima;
-    private int numeroAleatorio;
-    private SpriteRenderer sprite;
+    [SerializeField] internal float velocidadMovimiento;
+    [SerializeField] internal Transform[] puntosMoviento;
+    [SerializeField] internal float distanciaMinima;
+    internal int numeroAleatorio;
+    internal SpriteRenderer sprite;
 
     private float tiempoEntreAtaques = 2;
     private float tiempo;
@@ -35,7 +35,7 @@ public class Zombi_Controller : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         jugadorEnRango = Physics2D.Raycast(ojosZombie.position, transform.right, distanciaLinea, capaJugador);
         if (jugadorEnRango && jugadorEnRango.transform.CompareTag("Player"))
@@ -61,7 +61,7 @@ public class Zombi_Controller : MonoBehaviour
         
     }
 
-    private void Girar()
+    internal void Girar()
     {
         if (transform.position.x < puntosMoviento[numeroAleatorio].position.x)
         {
@@ -84,7 +84,7 @@ public class Zombi_Controller : MonoBehaviour
         }
     }
 
-    private void atacar()
+    internal void atacar()
     {
         tiempo += Time.deltaTime;
         if (tiempo >= tiempoEntreAtaques)
@@ -110,7 +110,7 @@ public class Zombi_Controller : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    public virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(ojosZombie.position,ojosZombie.position + transform.right * distanciaLinea);
