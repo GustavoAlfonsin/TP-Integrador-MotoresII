@@ -73,4 +73,10 @@ public class Arma
 			capacidadCargador = 30;
 		}
     }
+	
+	public float disparar()
+	{
+		municionActual--;
+		return this.danio;
+	}
 }

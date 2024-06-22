@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControladorJugador : MonoBehaviour
 {
-    private float vida;
+    [SerializeField] private float vida;
     private Rigidbody2D rb2D;
 
     [Header("Movimiento")]
@@ -102,6 +102,7 @@ public class ControladorJugador : MonoBehaviour
         if (vida <= 0) 
         {
             vida = 0;
+            Destroy(this.gameObject);
         }
     }
 }

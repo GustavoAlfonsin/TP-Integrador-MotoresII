@@ -25,7 +25,8 @@ public class ControladorArmasJugador : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        indexArma = 0;
+        armaActual = ArmasJugador[indexArma];
     }
 
     // Update is called once per frame
@@ -72,12 +73,13 @@ public class ControladorArmasJugador : MonoBehaviour
     private void Disparar()
     {
         RaycastHit2D raycastHit2D = Physics2D.Raycast(controladorDisparo.position, controladorDisparo.right, rango);
-
+        float danioGenerado = armaActual.disparar();
         if (raycastHit2D)
         {
             if (raycastHit2D.transform.CompareTag("Enemigo"))
             {
-                Debug.Log("Impacto con el enemigo");
+                raycastHit2D.transform.GetComponent<Zombi_Controller>().recibirDanio(danioGenerado);
+                Debug.Log($"Impacto con el enemigo y recibio {danioGenerado} de danio");
             }
         }
     }
