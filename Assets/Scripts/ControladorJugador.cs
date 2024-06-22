@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class ControladorJugador : MonoBehaviour
 {
-    [SerializeField] private float vida;
+    [Header("vida y Energia")]
+    private float vida;
+    [SerializeField] private float vidaMaxima;
+
+    [SerializeField] private barra_Vida barraDeVida;
+    [SerializeField] private barra_Energia barraDeEnergia;
+
     private Rigidbody2D rb2D;
 
     [Header("Movimiento")]
@@ -29,6 +35,9 @@ public class ControladorJugador : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         tiempoActualSprint = tiempoSprint;
+        vida = vidaMaxima;
+        barraDeVida.inicializarBarraDeVida(vida);
+        barraDeEnergia.inicializarBarraDeEnergia(tiempoSprint);
     }
 
     // Update is called once per frame
@@ -52,6 +61,7 @@ public class ControladorJugador : MonoBehaviour
             if (tiempoActualSprint > 0 )
             {
                 tiempoActualSprint -= Time.deltaTime;
+                barraDeEnergia.cambiarEnergiaActual(tiempoActualSprint);
             }
             else
             {
@@ -59,14 +69,17 @@ public class ControladorJugador : MonoBehaviour
                 estaCorriendo = false;
                 puedeCorrer = false;
                 tiempoSiguienteSprint = Time.time + tiempoEntreSprints;
+                barraDeEnergia.cambiarEnergiaActual(0);
             }
         }
 
         if (!estaCorriendo && tiempoActualSprint <= tiempoSprint && Time.time >= tiempoSiguienteSprint)
         {
             tiempoActualSprint += Time.deltaTime;
+            barraDeEnergia.cambiarEnergiaActual(tiempoActualSprint);
             if (tiempoActualSprint >= tiempoSprint)
             {
+                barraDeEnergia.cambiarEnergiaActual(tiempoSprint);
                 puedeCorrer = true;
             }
         }
@@ -99,6 +112,7 @@ public class ControladorJugador : MonoBehaviour
     public void tomarDanio(float danio)
     {
         vida -= danio;
+        barraDeVida.cambiarVidaActual(vida);
         if (vida <= 0) 
         {
             vida = 0;
