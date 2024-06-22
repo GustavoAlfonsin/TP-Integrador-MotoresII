@@ -76,7 +76,24 @@ public class Arma
 	
 	public float disparar()
 	{
-		municionActual--;
-		return this.danio;
+		if (municionActual > 0)
+		{
+            municionActual--;
+            return this.danio;
+        }
+		return 0;
+	}
+
+	public void recargar()
+	{
+		if (municionMaxima <= capacidadCargador - municionActual)
+		{
+			municionActual += municionMaxima;
+		}else if(municionMaxima > capacidadCargador - municionActual){
+			int recarga = capacidadCargador - municionActual;
+
+            municionActual = capacidadCargador;
+			municionMaxima -= recarga;
+		}
 	}
 }

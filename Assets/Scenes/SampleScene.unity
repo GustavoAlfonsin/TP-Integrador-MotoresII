@@ -474,8 +474,8 @@ MonoBehaviour:
   suavizadoDeMovimiento: 0.14
   velocidadMovimientoBase: 350
   velocidadExtra: 700
-  tiempoSprint: 1
-  tiempoEntreSprints: 4
+  tiempoSprint: 3
+  tiempoEntreSprints: 2
 --- !u!114 &283592657
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,6 +37,11 @@ public class ControladorArmasJugador : MonoBehaviour
         {
             Disparar();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            armaActual.recargar();
+            Debug.Log($"Tenes {armaActual.MunicionActual} balas del {armaActual.Tipo}");
+        }
     }
 
     private void CambiarArma()
@@ -72,15 +77,24 @@ public class ControladorArmasJugador : MonoBehaviour
 
     private void Disparar()
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(controladorDisparo.position, controladorDisparo.right, rango);
-        float danioGenerado = armaActual.disparar();
-        if (raycastHit2D)
+        if (armaActual.MunicionActual > 0)
         {
-            if (raycastHit2D.transform.CompareTag("Enemigo"))
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(controladorDisparo.position, controladorDisparo.right, rango);
+            float danioGenerado = armaActual.disparar();
+            Debug.Log($"Te quedan {armaActual.MunicionActual} balas de la ${armaActual.Tipo} ");
+            if (raycastHit2D)
             {
-                raycastHit2D.transform.GetComponent<Zombi_Controller>().recibirDanio(danioGenerado);
-                Debug.Log($"Impacto con el enemigo y recibio {danioGenerado} de danio");
+                if (raycastHit2D.transform.CompareTag("Enemigo"))
+                {
+                    raycastHit2D.transform.GetComponent<Zombi_Controller>().recibirDanio(danioGenerado);
+                    Debug.Log($"Impacto con el enemigo y recibio {danioGenerado} de danio");
+                }
             }
         }
+        else
+        {
+            Debug.Log("No tienes más balas");
+        }
+        
     }
 }

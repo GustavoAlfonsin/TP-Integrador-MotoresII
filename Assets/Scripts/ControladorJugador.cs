@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ControladorJugador : MonoBehaviour
@@ -7,6 +8,7 @@ public class ControladorJugador : MonoBehaviour
     [Header("vida y Energia")]
     private float vida;
     [SerializeField] private float vidaMaxima;
+    private int cantObjetosCurativos = 2;
 
     [SerializeField] private barra_Vida barraDeVida;
     [SerializeField] private barra_Energia barraDeEnergia;
@@ -83,6 +85,11 @@ public class ControladorJugador : MonoBehaviour
                 puedeCorrer = true;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            recurarse();
+        }
     }
 
     private void FixedUpdate()
@@ -117,6 +124,25 @@ public class ControladorJugador : MonoBehaviour
         {
             vida = 0;
             Destroy(this.gameObject);
+        }
+    }
+
+    private void recurarse()
+    {
+        if (cantObjetosCurativos > 0 && vida < vidaMaxima)
+        {
+            Debug.Log($"Tienes {vida} puntos de salud");
+            vida += 25;
+            if (vida > vidaMaxima)
+            {
+                vida = vidaMaxima;
+            }
+            barraDeVida.cambiarVidaActual(vida);
+            Debug.Log($"Ahora tienes {vida} puntos de vida");
+        }
+        else
+        {
+            Debug.Log("No tienes más objetos curativos");
         }
     }
 }
