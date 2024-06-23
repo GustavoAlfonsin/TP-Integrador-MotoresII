@@ -32,6 +32,20 @@ public class ControladorJugador : MonoBehaviour
     private bool puedeCorrer = true;
     private bool estaCorriendo = false;
 
+    public static ControladorJugador controladorJugador;
+
+    private void Awake()
+    {
+        if (controladorJugador == null)
+        {
+            controladorJugador = this;
+            DontDestroyOnLoad(controladorJugador);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
