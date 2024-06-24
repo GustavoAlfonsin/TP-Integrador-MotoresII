@@ -6,6 +6,7 @@ using UnityEngine;
 public class Doors_Controller : MonoBehaviour
 {
     [SerializeField] private GameObject[] destinos;
+    [SerializeField] public GameObject camara;
     [SerializeField] private GameObject jugador;
     [SerializeField] private bool isOpen;
     private int proximoDestino = 0;
@@ -25,7 +26,9 @@ public class Doors_Controller : MonoBehaviour
     {
         if (isOpen)
         {
+            camara.SetActive(false);
             jugador.transform.position = destinos[proximoDestino].transform.position;
+            destinos[proximoDestino].GetComponent<Doors_Controller>().camara.SetActive(true);
             if (proximoDestino >= destinos.Length)
             {
                 proximoDestino = 0;
