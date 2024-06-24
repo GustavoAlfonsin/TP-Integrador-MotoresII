@@ -63,13 +63,15 @@ public class Zombi_Controller : MonoBehaviour
 
     internal void Girar()
     {
-        if (transform.position.x < puntosMoviento[numeroAleatorio].position.x)
+        if (transform.position.x > puntosMoviento[numeroAleatorio].position.x)
         {
-            sprite.flipX = true;
+           //sprite.flipX = true;
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
         }
         else
         {
-            sprite.flipX = false;
+            //transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+            //sprite.flipX = false;
         }
     }
 

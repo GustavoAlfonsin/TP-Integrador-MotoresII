@@ -29,7 +29,7 @@ public class Doors_Controller : MonoBehaviour
             camara.SetActive(false);
             jugador.transform.position = destinos[proximoDestino].transform.position;
             destinos[proximoDestino].GetComponent<Doors_Controller>().camara.SetActive(true);
-            if (proximoDestino >= destinos.Length)
+            if (proximoDestino >= destinos.Length-1)
             {
                 proximoDestino = 0;
             }
