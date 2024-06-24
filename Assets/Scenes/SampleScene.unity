@@ -3632,6 +3632,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1836790623381091832, guid: e62863d1f376ab541b4c67892f9e0909, type: 3}
+      propertyPath: velocidadMovimiento
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1836790623381091832, guid: e62863d1f376ab541b4c67892f9e0909, type: 3}
       propertyPath: puntosMoviento.Array.data[0]
       value: 
       objectReference: {fileID: 1512554562}
@@ -11957,6 +11961,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1836790623381091832, guid: e62863d1f376ab541b4c67892f9e0909, type: 3}
+      propertyPath: velocidadMovimiento
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1836790623381091832, guid: e62863d1f376ab541b4c67892f9e0909, type: 3}
       propertyPath: puntosMoviento.Array.data[0]
       value: 
       objectReference: {fileID: 602294603}
@@ -12700,7 +12708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6790082db5d2af342be6cefc4da76a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderVida: {fileID: 0}
+  slider_Vida: {fileID: 0}
 --- !u!1 &1965613908
 GameObject:
   m_ObjectHideFlags: 0
