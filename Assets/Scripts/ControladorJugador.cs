@@ -153,6 +153,7 @@ public class ControladorJugador : MonoBehaviour
             }
             barraDeVida.cambiarVidaActual(vida);
             Debug.Log($"Ahora tienes {vida} puntos de vida");
+            cantObjetosCurativos--;
         }
         else
         {

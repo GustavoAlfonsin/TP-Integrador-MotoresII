@@ -23,6 +23,7 @@ public class Zombi_Controller : MonoBehaviour
 
     private float tiempoEntreAtaques = 2;
     private float tiempo;
+    [SerializeField] private float danioAtaque;
 
     [SerializeField] private Transform player;
     // Start is called before the first frame update
@@ -115,6 +116,7 @@ public class Zombi_Controller : MonoBehaviour
         tiempo += Time.deltaTime;
         if (tiempo >= tiempoEntreAtaques)
         {
+            player.GetComponent<ControladorJugador>().tomarDanio(danioAtaque);
             Debug.Log("El zombi ataco al jugador");
             tiempo = 0;
         }
