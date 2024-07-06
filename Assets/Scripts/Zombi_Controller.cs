@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Zombi_Controller : MonoBehaviour
@@ -8,18 +10,16 @@ public class Zombi_Controller : MonoBehaviour
     private Rigidbody2D rb2D;
 
     [Header("Detector Del Jugador")]
-    public Transform ojosZombie;
-    public float distanciaLinea;
-    public LayerMask capaJugador;
-    public RaycastHit2D jugadorEnRango;
-    internal bool enContactoJugador;
+    internal bool siguiendoJugador;
+    [SerializeField] private float minDistance;
 
     [Header("Movimiento")]
-    [SerializeField] internal float velocidadMovimiento;
+    [SerializeField] private float speed;
+    [SerializeField] private float waitTime;
     [SerializeField] internal Transform[] puntosMoviento;
-    [SerializeField] internal float distanciaMinima;
-    internal int numeroAleatorio;
-    internal SpriteRenderer sprite;
+    [SerializeField] private float areaDeDeteccion;
+    private bool isWaiting;
+    private int waypointActual;
 
     private float tiempoEntreAtaques = 2;
     private float tiempo;
@@ -28,51 +28,75 @@ public class Zombi_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        numeroAleatorio = Random.Range(0, puntosMoviento.Length);
         rb2D = GetComponent<Rigidbody2D>();
-        sprite = rb2D.GetComponent<SpriteRenderer>();
-        Girar();
+        Flip();
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
-        jugadorEnRango = Physics2D.Raycast(ojosZombie.position, transform.right, distanciaLinea, capaJugador);
-        if (jugadorEnRango && jugadorEnRango.transform.CompareTag("Player"))
+        if (siguiendoJugador)
         {
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(jugadorEnRango.transform.position.x, transform.position.y)
-                                , velocidadMovimiento * Time.deltaTime);
-        }
-        else
-        {
-            transform.position = Vector2.MoveTowards(transform.position, puntosMoviento[numeroAleatorio].position, velocidadMovimiento * Time.deltaTime);
-
-            if (Vector2.Distance(transform.position, puntosMoviento[numeroAleatorio].position) < distanciaMinima)
+            if (Mathf.Abs(transform.position.x - player.position.x) > minDistance)
             {
-                numeroAleatorio = Random.Range(0, puntosMoviento.Length);
-                Girar();
+                transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+                Flip();
             }
-        }
-
-        if (enContactoJugador)
+            else
+            {
+                atacar();
+            }
+            
+        }else if (transform.position != puntosMoviento[waypointActual].position)
         {
-            atacar();
+            Flip();
+            siguiendoJugador = false;
+            transform.position = Vector2.MoveTowards(transform.position, puntosMoviento[waypointActual].position,
+                                                      speed * Time.deltaTime);
         }
-        
+        else if(!isWaiting)
+        {
+            StartCoroutine(Wait());
+        }
     }
 
-    internal void Girar()
+    IEnumerator Wait() 
     {
-        if (transform.position.x > puntosMoviento[numeroAleatorio].position.x)
+        isWaiting = true;
+        yield return new WaitForSeconds(waitTime);
+        waypointActual++;
+        if (waypointActual == puntosMoviento.Length) 
         {
-           //sprite.flipX = true;
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+            waypointActual = 0;
+        }
+        isWaiting = false;
+        Flip();
+    }
+    private void Flip()
+    {
+        if (siguiendoJugador)
+        {
+            if (transform.position.x > player.position.x)
+            {
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
         }
         else
         {
-            //transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
-            //sprite.flipX = false;
+            if (transform.position.x > puntosMoviento[waypointActual].position.x)
+            {
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
         }
+        
     }
 
     public void recibirDanio(float danio)
@@ -91,31 +115,9 @@ public class Zombi_Controller : MonoBehaviour
         tiempo += Time.deltaTime;
         if (tiempo >= tiempoEntreAtaques)
         {
-            jugadorEnRango.rigidbody.GetComponent<ControladorJugador>().tomarDanio(20);
             Debug.Log("El zombi ataco al jugador");
             tiempo = 0;
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            enContactoJugador = true;
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            enContactoJugador = false;
-        }
-    }
-
-    public virtual void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(ojosZombie.position,ojosZombie.position + transform.right * distanciaLinea);
     }
 
 }
