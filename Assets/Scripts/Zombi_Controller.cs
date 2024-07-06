@@ -12,12 +12,12 @@ public class Zombi_Controller : MonoBehaviour
     [Header("Detector Del Jugador")]
     internal bool siguiendoJugador;
     [SerializeField] private float minDistance;
+    public bool left;
 
     [Header("Movimiento")]
-    [SerializeField] private float speed;
+    [SerializeField] internal float speed;
     [SerializeField] private float waitTime;
     [SerializeField] internal Transform[] puntosMoviento;
-    [SerializeField] private float areaDeDeteccion;
     private bool isWaiting;
     private int waypointActual;
 
@@ -80,10 +80,12 @@ public class Zombi_Controller : MonoBehaviour
             if (transform.position.x > player.position.x)
             {
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                left = true;
             }
             else
             {
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                left = false;
             }
         }
         else
@@ -91,10 +93,12 @@ public class Zombi_Controller : MonoBehaviour
             if (transform.position.x > puntosMoviento[waypointActual].position.x)
             {
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                left = true;
             }
             else
             {
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                left = false;
             }
         }
         
