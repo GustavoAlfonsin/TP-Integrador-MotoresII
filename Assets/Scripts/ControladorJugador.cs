@@ -160,4 +160,10 @@ public class ControladorJugador : MonoBehaviour
             Debug.Log("No tienes más objetos curativos");
         }
     }
+
+    public void tomarObjetoCurativo()
+    {
+        cantObjetosCurativos++;
+        Debug.Log($"Tenias {cantObjetosCurativos - 1} objetos curativos ahora tienes {cantObjetosCurativos}");
+    }
 }

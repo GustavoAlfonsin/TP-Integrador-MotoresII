@@ -97,4 +97,32 @@ public class ControladorArmasJugador : MonoBehaviour
         }
         
     }
+
+    public void recogerMunicion(Tipo_objeto tipo, int municion)
+    {
+        Tipos_Armas elArma;
+        switch (tipo)
+        {
+            case Tipo_objeto.municion_pistola:
+                elArma = Tipos_Armas.Pistola;
+                break;
+            case Tipo_objeto.municion_escopeta:
+                elArma = Tipos_Armas.Escopeta;
+                break;
+            case Tipo_objeto.municion_fusil:
+                elArma = Tipos_Armas.Fusil;
+                break;
+            default:
+                elArma = Tipos_Armas.Pistola;
+                break;
+        }
+        foreach (Arma arma in ArmasJugador)
+        {
+            if(arma.Tipo == elArma)
+            {
+                arma.aumentarMunicion(municion);
+                Debug.Log($"Encontraste municion de {arma.Tipo}");
+            }
+        }
+    }
 }

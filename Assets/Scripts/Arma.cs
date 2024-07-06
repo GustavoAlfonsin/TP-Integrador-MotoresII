@@ -96,4 +96,9 @@ public class Arma
 			municionMaxima -= recarga;
 		}
 	}
+
+	public void aumentarMunicion(int municion)
+	{
+		municionMaxima += municion;
+	}
 }
