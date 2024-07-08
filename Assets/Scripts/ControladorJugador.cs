@@ -16,6 +16,7 @@ public class ControladorJugador : MonoBehaviour
     [SerializeField] private barra_Energia barraDeEnergia;
 
     private Rigidbody2D rb2D;
+    [SerializeField] GameManager gameManager;
 
     [Header("Movimiento")]
     private float movimientoHorizontal = 0f;
@@ -142,6 +143,7 @@ public class ControladorJugador : MonoBehaviour
         {
             vida = 0;
             Destroy(this.gameObject);
+            gameManager.gameOver = true;
         }
         else
         {
