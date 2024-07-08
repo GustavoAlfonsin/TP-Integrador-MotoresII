@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class Zombi_Controller : MonoBehaviour
 {
-    private float vida = 15;
+    [SerializeField] private float vidaMaxima;
+    private float vida;
+    private SpriteRenderer SpriteRenderer;
+    private Color colorbase;
     private Rigidbody2D rb2D;
 
     [Header("Detector Del Jugador")]
@@ -29,7 +32,10 @@ public class Zombi_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        vida = vidaMaxima;
         rb2D = GetComponent<Rigidbody2D>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        colorbase = SpriteRenderer.color;
         Flip();
     }
 
@@ -113,8 +119,18 @@ public class Zombi_Controller : MonoBehaviour
             Destroy(this.gameObject);
             Debug.Log("El zombi ha sido eliminado");
         }
+        else
+        {
+            StartCoroutine(mostrarDanio());
+        }
     }
-
+    IEnumerator mostrarDanio()
+    {
+        float damageDuration = 0.1f;
+        SpriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(damageDuration);
+        SpriteRenderer.color = colorbase;
+    }
     internal void atacar()
     {
         tiempo += Time.deltaTime;

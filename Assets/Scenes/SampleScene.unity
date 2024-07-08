@@ -34489,6 +34489,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 283592655}
     - target: {fileID: 3497564606860255290, guid: 4a384f9c0808eb4408ddae8cd73eba79, type: 3}
+      propertyPath: vidaMaxima
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3497564606860255290, guid: 4a384f9c0808eb4408ddae8cd73eba79, type: 3}
       propertyPath: puntosMoviento.Array.data[0]
       value: 
       objectReference: {fileID: 1127775826}

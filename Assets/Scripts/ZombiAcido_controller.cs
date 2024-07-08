@@ -12,10 +12,6 @@ public class ZombiAcido_controller : Zombi_Controller
     private float tiempoEntreDisparos = 10f;
     private float tiempoActual = -5f;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
     public override void Update()
     {
         tiempoActual += Time.deltaTime;
