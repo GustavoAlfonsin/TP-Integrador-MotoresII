@@ -7,6 +7,8 @@ public class ControladorJugador : MonoBehaviour
 {
     [Header("vida y Energia")]
     private float vida;
+    private SpriteRenderer spriteRenderer;
+    private Color colorbase;
     [SerializeField] private float vidaMaxima;
     private int cantObjetosCurativos = 2;
 
@@ -52,6 +54,8 @@ public class ControladorJugador : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         tiempoActualSprint = tiempoSprint;
         vida = vidaMaxima;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        colorbase = spriteRenderer.color;
         barraDeVida.inicializarBarraDeVida(vida);
         barraDeEnergia.inicializarBarraDeEnergia(tiempoSprint);
     }
@@ -139,6 +143,17 @@ public class ControladorJugador : MonoBehaviour
             vida = 0;
             Destroy(this.gameObject);
         }
+        else
+        {
+            StartCoroutine(mostrarDanio());
+        }
+    }
+    IEnumerator mostrarDanio()
+    {
+        float damageDuration = 0.1f;
+        spriteRenderer.color = Color.black;
+        yield return new WaitForSeconds(damageDuration);
+        spriteRenderer.color = colorbase;
     }
 
     private void recurarse()
